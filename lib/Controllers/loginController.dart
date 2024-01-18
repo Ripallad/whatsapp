@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:whatsapp/models/chatuserModel.dart';
-import 'package:whatsapp/screen/addnewuser.dart';
+
 import 'package:whatsapp/screen/homescreen.dart';
 import 'package:whatsapp/screen/otp.dart';
 import 'package:whatsapp/screen/phone.dart';

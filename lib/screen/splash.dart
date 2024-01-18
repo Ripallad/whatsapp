@@ -3,8 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:whatsapp/Controllers/loginController.dart';
-import 'package:whatsapp/screen/homescreen.dart';
-import 'package:whatsapp/screen/phone.dart';
+
 
 class splash extends StatelessWidget {
   const splash({super.key});
