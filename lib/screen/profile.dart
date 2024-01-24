@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:whatsapp/Controllers/loginController.dart';
-import 'package:whatsapp/screen/loginscreen.dart';
 import 'package:whatsapp/widgets/profilewidget.dart';
 
 class Profile extends StatelessWidget {
