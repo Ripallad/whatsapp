@@ -5,12 +5,13 @@ import 'package:get/get.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:whatsapp/Controllers/loginController.dart';
 
-class addnewuser extends StatelessWidget {
-  const addnewuser({super.key});
+class Addnewuser extends StatelessWidget {
+  const Addnewuser({super.key});
 
   @override
   Widget build(BuildContext context) {
     final logincontroller = Get.put(Logincontroller());
+    var namecontroller = TextEditingController();
     return SafeArea(
       child: Obx(
         () => logincontroller.obxcheck == true
@@ -55,7 +56,11 @@ class addnewuser extends StatelessWidget {
                         padding: const EdgeInsets.only(left: 20),
                         child: Row(
                           children: [
-                            Container(width: 350, child: TextFormField()),
+                            Container(
+                                width: 350,
+                                child: TextFormField(
+                                  controller: namecontroller,
+                                )),
                             Expanded(
                                 child: Icon(
                               Icons.insert_emoticon,
@@ -64,18 +69,24 @@ class addnewuser extends StatelessWidget {
                         ),
                       ),
                       50.heightBox,
-                      Container(
-                        width: 100,
-                        height: 35,
-                        decoration: BoxDecoration(
-                          color: Color(0xFF00A884),
+                      InkWell(
+                        onTap: () {
+                          logincontroller.addnewuser(namecontroller.text,
+                              File(logincontroller.selectedProfile.value));
+                        },
+                        child: Container(
+                          width: 100,
+                          height: 35,
+                          decoration: BoxDecoration(
+                            color: Color(0xFF00A884),
+                          ),
+                          child: "NEXT"
+                              .text
+                              .white
+                              .size(15)
+                              .fontWeight(FontWeight.w600)
+                              .makeCentered(),
                         ),
-                        child: "NEXT"
-                            .text
-                            .white
-                            .size(15)
-                            .fontWeight(FontWeight.w600)
-                            .makeCentered(),
                       ),
                     ],
                   ),

@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:whatsapp/models/chatuserModel.dart';
+import 'package:whatsapp/screen/addnewuser.dart';
 
 import 'package:whatsapp/screen/homescreen.dart';
 import 'package:whatsapp/screen/otp.dart';
@@ -26,6 +27,8 @@ class Logincontroller extends GetxController {
 
   RxBool obxcheck = false.obs;
 
+  Rx<ChatUser?> loginuser = Rx<ChatUser?>(null);
+
   Future<bool> checkUserExist() async {
     return (await firestore
             .collection('users')
@@ -41,7 +44,8 @@ class Logincontroller extends GetxController {
     if (user == null) {
       Get.offAll(() => phone());
     } else {
-      Get.offAll(() => homescreen());
+      //Get.offAll(() => homescreen());
+      getUsersData().then((value) => Get.offAll(homescreen()));
     }
   }
 
@@ -86,14 +90,35 @@ class Logincontroller extends GetxController {
           .signInWithCredential(credential)
           .then((auth) => checkUserExist().then((check) {
                 if (check == true) {
-                  Get.offAll(() => homescreen());
+                  getUsersData().then((value) => Get.offAll(homescreen()));
+                  // Get.offAll(() => homescreen());
                 } else {
-                  Get.offAll(() => phone());
+                  Get.offAll(() => Addnewuser());
                 }
               }));
     } catch (e) {
       log(e.toString());
     }
+  }
+
+  Future<bool> getUsersData() async {
+    await firestore
+        .collection('users')
+        .doc('${auth.currentUser!.phoneNumber}')
+        .get()
+        .then(
+          (DocumentSnapshot snapshot) => loginuser.value = ChatUser(
+            isActive: snapshot['is_active'],
+            lastSeen: snapshot['last_seen'],
+            phone: snapshot['phone'],
+            profile: snapshot['profile'],
+            about: snapshot['about'],
+            name: snapshot['name'],
+            id: snapshot['id'],
+            createAt: snapshot['create_at'],
+          ),
+        );
+    return true;
   }
 
   Future<String> storagedataInStorage(String ref, File myfile) async {
@@ -103,8 +128,8 @@ class Logincontroller extends GetxController {
     return url;
   }
 
-  addnewuser(String name, File myfile) {
-    storagedataInStorage(
+  addnewuser(String name, File myfile) async {
+    await storagedataInStorage(
             'profileImage/${auth.currentUser!.phoneNumber}', myfile)
         .then((url) {
       final time = DateTime.now().microsecondsSinceEpoch.toString();
@@ -117,6 +142,8 @@ class Logincontroller extends GetxController {
           name: name,
           id: '${auth.currentUser!.phoneNumber}',
           createAt: time);
+
+      loginuser.value = user;
 
       firestore
           .collection('users')
