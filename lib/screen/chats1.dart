@@ -44,7 +44,7 @@ class chat1 extends StatelessWidget {
                 height: 50,
                 decoration: BoxDecoration(
                     image: DecorationImage(
-                        image: AssetImage("assets/images/p1.jpeg"),
+                        image: NetworkImage(oppuser.profile),
                         fit: BoxFit.cover),
                     borderRadius: BorderRadius.circular(50),
                     color: Colors.blue),

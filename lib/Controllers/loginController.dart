@@ -163,4 +163,12 @@ class Logincontroller extends GetxController {
       return image.path;
     }
   }
+
+  updateuserdata(String name, String about)async {
+   await firestore
+        .collection('users')
+        .doc('${auth.currentUser!.phoneNumber}')
+        .update({name: name, about: about});
+    getUsersData();
+  }
 }

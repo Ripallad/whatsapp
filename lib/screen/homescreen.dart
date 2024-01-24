@@ -3,9 +3,8 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:whatsapp/Controllers/loginController.dart';
-import 'package:whatsapp/models/chatuserModel.dart';
+
 import 'package:whatsapp/screen/calls.dart';
-import 'package:whatsapp/screen/chats1.dart';
 import 'package:whatsapp/screen/profile.dart';
 import 'package:whatsapp/screen/status.dart';
 import 'package:whatsapp/widgets/chats.dart';

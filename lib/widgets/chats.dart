@@ -35,8 +35,8 @@ Widget Chats() {
                 padding: const EdgeInsets.all(15.0),
                 child: ListTile(
                   leading: Container(
-                    height: 60,
-                    width: 60,
+                    height: 50,
+                    width: 50,
                     decoration: BoxDecoration(
                         image: DecorationImage(
                             image: NetworkImage(datalist[index].profile),
