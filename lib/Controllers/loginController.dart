@@ -51,6 +51,7 @@ class Logincontroller extends GetxController {
 
   userlogout() {
     auth.signOut();
+    updateActiveStatus(false);
     Get.offAll(() => phone());
   }
 
@@ -164,11 +165,12 @@ class Logincontroller extends GetxController {
     }
   }
 
-  updateuserdata(String username, String userabout,String image) async {
+  updateuserdata(String username, String userabout, String image) async {
     await firestore
         .collection('users')
         .doc('${auth.currentUser!.phoneNumber}')
-        .update({'name': username, 'about': userabout,'profile':image}).then((value) {
+        .update({'name': username, 'about': userabout, 'profile': image}).then(
+            (value) {
       getUsersData().then((value) {
         Get.back();
         selectedProfile.value = '';

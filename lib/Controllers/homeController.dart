@@ -54,6 +54,7 @@ class HomeController extends GetxController {
     final date = DateTime.fromMillisecondsSinceEpoch(int.parse(time));
     final formattedtime = TimeOfDay.fromDateTime(date).format(context);
     final today = DateTime.now();
+    print(formattedtime);
     if (today.day == date.day &&
         today.month == date.month &&
         today.year == date.year) {
@@ -67,7 +68,9 @@ class HomeController extends GetxController {
       final dt = 'Last seen on ${date.day} ${getMonth(date)} at $formattedtime';
       return dt;
     }
-    final yearly = 'Last seen on ${date.day} ${getMonth(date)} ${date.year}';
+    print(date.year);
+    final yearly =
+        'Last seen on ${date.day} ${getMonth(date)} ${date.year} at $formattedtime';
     return yearly;
   }
 
