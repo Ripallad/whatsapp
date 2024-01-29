@@ -1,7 +1,8 @@
-
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:whatsapp/Controllers/loginController.dart';
+import 'package:whatsapp/screen/Selectcontact.dart';
 
 import 'package:whatsapp/screen/calls.dart';
 import 'package:whatsapp/screen/profile.dart';
@@ -9,12 +10,37 @@ import 'package:whatsapp/screen/status.dart';
 import 'package:whatsapp/widgets/chats.dart';
 //import 'package:whatsapp/screen/chats2.dart';
 
-class homescreen extends StatelessWidget {
+class homescreen extends StatefulWidget {
   const homescreen({super.key});
 
   @override
+  State<homescreen> createState() => _homescreenState();
+}
+
+final logincontroller = Get.put(Logincontroller());
+
+class _homescreenState extends State<homescreen> {
+  @override
+  void initState() {
+    logincontroller.updateActiveStatus(true);
+
+    SystemChannels.lifecycle.setMessageHandler((message) {
+      if (message.toString().contains('paused') ||
+          message.toString().contains('inactive')) {
+        setState(() {
+          logincontroller.updateActiveStatus(false);
+        });
+      } else {
+        setState(() {
+          logincontroller.updateActiveStatus(true);
+        });
+      }
+      return Future.value(message);
+    });
+    super.initState();
+  }
+
   Widget build(BuildContext context) {
-    final logincontroller = Get.put(Logincontroller());
     var size = MediaQuery.of(context).size;
     return DefaultTabController(
       length: 3,
@@ -22,16 +48,6 @@ class homescreen extends StatelessWidget {
         appBar: AppBar(
           toolbarHeight: 75,
           backgroundColor: Color.fromARGB(255, 4, 86, 4),
-          // leading: InkWell(
-          //   onTap: () => Navigator.pop(context),
-          //   child: Padding(
-          //     padding: const EdgeInsets.all(8.0),
-          //     child: Icon(
-          //       Icons.arrow_back,
-          //       color: Colors.white,
-          //     ),
-          //   ),
-          // ),
           title: Text(
             "Whatsapp",
             style: TextStyle(color: Colors.white),
@@ -75,6 +91,11 @@ class homescreen extends StatelessWidget {
                       value: "Starred Message",
                     ),
                     PopupMenuItem(
+                      onTap: () => logincontroller.userlogout(),
+                      child: Text("Logout"),
+                      value: "Logout",
+                    ),
+                    PopupMenuItem(
                       onTap: () {
                         Get.to(() => Profile());
                       },
@@ -111,14 +132,26 @@ class homescreen extends StatelessWidget {
                     child: Center(child: Text("Calls")))
               ]),
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            logincontroller.userlogout();
-          },
-          backgroundColor: Colors.green,
-          child: Icon(
-            Icons.add,
-            color: Colors.white,
+        floatingActionButton: InkWell(
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return Selectcontact();
+              },
+            ),
+          ),
+          child: Container(
+            height: 60,
+            width: 60,
+            decoration: BoxDecoration(
+              color: Color.fromARGB(255, 4, 86, 4),
+              borderRadius: BorderRadius.circular(50),
+            ),
+            child: Icon(
+              Icons.message,
+              color: Colors.white,
+            ),
           ),
         ),
         body: TabBarView(children: [

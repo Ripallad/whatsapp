@@ -21,7 +21,8 @@ class chat1 extends StatelessWidget {
       () => Scaffold(
         backgroundColor: Colors.blueGrey,
         appBar: AppBar(
-          toolbarHeight: 80,
+          titleSpacing: 10,
+          toolbarHeight: 90,
           backgroundColor: Color.fromARGB(255, 4, 86, 4),
           leadingWidth: 30,
           leading: InkWell(
@@ -52,23 +53,30 @@ class chat1 extends StatelessWidget {
               SizedBox(
                 width: 10,
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    oppuser.id == logincontroller.loginuser.value?.id
-                        ? "me"
-                        : "${oppuser.name}",
-                    style: TextStyle(color: Colors.white, fontSize: 20),
-                  ),
-                  Text(
-                    oppuser.lastSeen ==
-                            logincontroller.loginuser.value?.lastSeen
-                        ? "Message Yourself"
-                        : "${oppuser.lastSeen}",
-                    style: TextStyle(color: Colors.white, fontSize: 15),
-                  ),
-                ],
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      oppuser.id == logincontroller.loginuser.value?.id
+                          ? "me"
+                          : "${oppuser.name}",
+                      style: TextStyle(color: Colors.white, fontSize: 20),
+                    ),
+                    Text(
+                      oppuser.id == logincontroller.loginuser.value?.id
+                          ? "Message Yourself"
+                          : oppuser.isActive == true
+                              ? 'online'
+                              : homecontroller.getLastSeen(
+                                  context: context, time: oppuser.lastSeen),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 15,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
@@ -79,15 +87,12 @@ class chat1 extends StatelessWidget {
               size: 30,
             ),
             SizedBox(
-              width: 20,
+              width: 10,
             ),
             Icon(
               Icons.call,
               color: Colors.white,
               size: 25,
-            ),
-            SizedBox(
-              width: 10,
             ),
             PopupMenuButton<String>(
                 iconColor: Colors.white,

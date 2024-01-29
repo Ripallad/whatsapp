@@ -2,13 +2,16 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:whatsapp/Controllers/homeController.dart';
 import 'package:whatsapp/Controllers/loginController.dart';
 import 'package:whatsapp/models/chatuserModel.dart';
+
 
 import '../screen/chats1.dart';
 
 Widget Chats() {
   final loginController = Get.put(Logincontroller());
+  final homeController = Get.put(HomeController());
   return StreamBuilder(
       stream: loginController.firestore.collection('users').snapshots(),
       builder: (context, snapshot) {
@@ -32,7 +35,7 @@ Widget Chats() {
             itemCount: datalist.length,
             itemBuilder: (context, index) {
               return Padding(
-                padding: const EdgeInsets.all(15.0),
+                padding: const EdgeInsets.all(5.0),
                 child: ListTile(
                   leading: Container(
                     height: 50,
@@ -70,20 +73,27 @@ Widget Chats() {
                         ),
                         Row(
                           children: [
-                            Icon(Icons.done_all),
-                            SizedBox(
-                              width: 3,
+                            Icon(
+                              Icons.done_all,
+                              size: Checkbox.width,
                             ),
-                            Text(
-                              datalist[index].about,
-                              style: TextStyle(fontSize: 10),
+                            SizedBox(
+                              width: 2,
+                            ),
+                            Expanded(
+                              child: Text(
+                                datalist[index].about,
+                                style: TextStyle(fontSize: 11),
+                              ),
                             ),
                           ],
                         ),
                       ],
                     ),
                   ),
-                  trailing: Text(datalist[index].lastSeen),
+                  trailing: Text(homeController.getFormatedDate(
+                      context: context,
+                      time: loginController.loginuser.value!.lastSeen)),
                   // subtitle: Text("8234567534"),
                   // trailing: Icon(Icons.arrow_forward),
                 ),

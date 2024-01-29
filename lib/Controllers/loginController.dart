@@ -164,11 +164,24 @@ class Logincontroller extends GetxController {
     }
   }
 
-  updateuserdata(String name, String about)async {
-   await firestore
+  updateuserdata(String username, String userabout,String image) async {
+    await firestore
         .collection('users')
         .doc('${auth.currentUser!.phoneNumber}')
-        .update({name: name, about: about});
-    getUsersData();
+        .update({'name': username, 'about': userabout,'profile':image}).then((value) {
+      getUsersData().then((value) {
+        Get.back();
+        selectedProfile.value = '';
+      });
+    });
+  }
+
+  updateActiveStatus(status) async {
+    final time = DateTime.now().millisecondsSinceEpoch.toString();
+
+    await firestore
+        .collection('users')
+        .doc(loginuser.value?.id)
+        .update({'is_active': status, 'last_seen': time});
   }
 }

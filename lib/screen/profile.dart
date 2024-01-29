@@ -17,35 +17,48 @@ class Profile extends StatelessWidget {
     TextEditingController aboutController =
         TextEditingController(text: logincontroller.loginuser.value!.about);
 
-    TextEditingController phoneController =
-        TextEditingController(text: logincontroller.loginuser.value!.phone);
     return SafeArea(
         child: Obx(
       () => Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          leading: InkWell(
+            onTap: () {
+              if (logincontroller.selectedProfile.value == '') {
+                logincontroller.updateuserdata(
+                    nameController.text,
+                    aboutController.text,
+                    logincontroller.loginuser.value!.profile);
+              } else {
+                logincontroller
+                    .storagedataInStorage(
+                        'profileImage/${logincontroller.loginuser.value?.phone.toString()}',
+                        File(logincontroller.selectedProfile.value))
+                    .then((img) => logincontroller.updateuserdata(
+                        nameController.text, aboutController.text, img));
+              }
+            },
+            child: Icon(Icons.arrow_back),
+          ),
+        ),
         body: Center(
           child: Padding(
             padding: const EdgeInsets.only(top: 30),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 InkWell(
                   onTap: () async {
                     await logincontroller.pickimage();
                   },
                   child: logincontroller.selectedProfile.value == ''
-                      ? Center(
-                          child: CircleAvatar(
-                            radius: 80,
-                            backgroundImage:
-                                AssetImage("assets/images/empty_user.jpg"),
-                          ),
+                      ? CircleAvatar(
+                          radius: 80,
+                          backgroundImage: NetworkImage(
+                              logincontroller.loginuser.value!.profile),
                         )
-                      : Center(
-                          child: CircleAvatar(
-                            radius: 80,
-                            backgroundImage: FileImage(
-                                File(logincontroller.selectedProfile.value)),
+                      : CircleAvatar(
+                          radius: 80,
+                          backgroundImage: FileImage(
+                            File(logincontroller.selectedProfile.value),
                           ),
                         ),
                 ),
@@ -58,8 +71,20 @@ class Profile extends StatelessWidget {
                     logincontroller.loginuser.value?.about, Icons.info_outline),
                 //  7.heightBox,
                 Divider(thickness: 0.5),
-                ProfileWidget(context, phoneController, 'Phone',
-                    logincontroller.loginuser.value?.phone, Icons.phone)
+                ListTile(
+                    visualDensity: VisualDensity.compact,
+                    leading: Icon(Icons.phone,
+                        size: MediaQuery.of(context).size.width * 0.06,
+                        color: Colors.grey.shade600),
+                    title: Text('Phone'),
+                    titleTextStyle:
+                        TextStyle(color: Colors.grey.shade600, fontSize: 13),
+                    subtitle: Text(
+                      logincontroller.loginuser.value!.phone,
+                      style: TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.bold),
+                    )),
+                Divider(thickness: 0.5),
               ],
             ),
           ),
