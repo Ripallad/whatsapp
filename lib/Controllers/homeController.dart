@@ -1,12 +1,70 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:whatsapp/Controllers/loginController.dart';
 import 'package:whatsapp/models/chatuserModel.dart';
 import 'package:whatsapp/models/messageModel.dart';
 
 class HomeController extends GetxController {
   RxString enteredMessage = ''.obs;
+
+  RxString msgImage = ''.obs;
+
+  RxBool showemoji = false.obs;
+
+  void updateEntermassage(String message) {
+    enteredMessage.value = message;
+  }
+
+  Future pickGalleryImage() async {
+    var image = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (image == null) {
+      return;
+    } else {
+      msgImage.value = image.path;
+      return image.path;
+    }
+  }
+
+  pickCameraImage() async {
+    var image = await ImagePicker().pickImage(source: ImageSource.camera);
+    if (image == null) {
+      return;
+    } else {
+      msgImage.value = image.path;
+      return image.path;
+    }
+  }
+
+  sendImagesFromGallery(oppuser) {
+    pickGalleryImage().then((value) async {
+      final time = DateTime.now().millisecondsSinceEpoch.toString();
+      logincontroller
+          .storagedataInStorage(
+              '/chatImages/${logincontroller.loginuser.value?.id}_$time',
+              File(msgImage.value))
+          .then((image) {
+        sendmessage(oppuser, image, Type.image);
+      });
+    });
+  }
+
+  sendImagesFromCamera(oppuser) {
+    pickCameraImage().then((value) async {
+      final time = DateTime.now().millisecondsSinceEpoch.toString();
+      logincontroller
+          .storagedataInStorage(
+              '/chatImages/${logincontroller.loginuser.value?.id}_$time',
+              File(msgImage.value))
+          .then((image) {
+        sendmessage(oppuser, image, Type.image);
+      });
+    });
+  }
+
   final logincontroller = Get.put(Logincontroller());
   sendmessage(ChatUser oppUser, mymessage, Type type) async {
     var time = DateTime.now().millisecondsSinceEpoch.toString();
