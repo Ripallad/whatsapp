@@ -66,7 +66,7 @@ class phone extends StatelessWidget {
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: Text("Please Enter 10 Digit mobile no")));
                 } else {
-                  logincontroller.verifyMobileNumber(
+                  logincontroller.verifyphonenumber(
                       "+91", mobileController.text, context);
                 }
               },

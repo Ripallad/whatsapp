@@ -24,16 +24,16 @@ class Profile extends StatelessWidget {
           leading: InkWell(
             onTap: () {
               if (logincontroller.selectedProfile.value == '') {
-                logincontroller.updateuserdata(
+                logincontroller.updateUserData(
                     nameController.text,
                     aboutController.text,
                     logincontroller.loginuser.value!.profile);
               } else {
                 logincontroller
-                    .storagedataInStorage(
+                    .storeDataInStorage(
                         'profileImage/${logincontroller.loginuser.value?.phone.toString()}',
                         File(logincontroller.selectedProfile.value))
-                    .then((img) => logincontroller.updateuserdata(
+                    .then((img) => logincontroller.updateUserData(
                         nameController.text, aboutController.text, img));
               }
             },
@@ -47,7 +47,7 @@ class Profile extends StatelessWidget {
               children: [
                 InkWell(
                   onTap: () async {
-                    await logincontroller.pickimage();
+                    await logincontroller.pickImage();
                   },
                   child: logincontroller.selectedProfile.value == ''
                       ? CircleAvatar(

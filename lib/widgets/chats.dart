@@ -6,7 +6,6 @@ import 'package:whatsapp/Controllers/homeController.dart';
 import 'package:whatsapp/Controllers/loginController.dart';
 import 'package:whatsapp/models/chatuserModel.dart';
 
-
 import '../screen/chats1.dart';
 
 Widget Chats() {

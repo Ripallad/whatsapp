@@ -13,7 +13,7 @@ class splash extends StatelessWidget {
     final lc = Get.put(Logincontroller());
     Timer(Duration(seconds: 2), () {
      
-      lc.checkUserLogin();
+      lc.checkuserlogin();
     });
     return SafeArea(
       child: Scaffold(

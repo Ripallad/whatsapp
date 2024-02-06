@@ -30,7 +30,7 @@ class otp extends StatelessWidget {
           InkWell(
             onTap: () {
               try {
-                logincontroller.verifyOtp(otp);
+                logincontroller.verifyotp(otp);
               } catch (e) {
                 if (otp.length < 6) {
                   ScaffoldMessenger.of(context).showSnackBar(

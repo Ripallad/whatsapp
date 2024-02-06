@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:whatsapp/firebase_options.dart';
 
+
 import 'package:whatsapp/screen/splash.dart';
 
 void main() async {

@@ -43,7 +43,7 @@ class HomeController extends GetxController {
     pickGalleryImage().then((value) async {
       final time = DateTime.now().millisecondsSinceEpoch.toString();
       logincontroller
-          .storagedataInStorage(
+          .storeDataInStorage(
               '/chatImages/${logincontroller.loginuser.value?.id}_$time',
               File(msgImage.value))
           .then((image) {
@@ -56,7 +56,7 @@ class HomeController extends GetxController {
     pickCameraImage().then((value) async {
       final time = DateTime.now().millisecondsSinceEpoch.toString();
       logincontroller
-          .storagedataInStorage(
+          .storeDataInStorage(
               '/chatImages/${logincontroller.loginuser.value?.id}_$time',
               File(msgImage.value))
           .then((image) {
