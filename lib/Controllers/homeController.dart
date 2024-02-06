@@ -6,7 +6,9 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:whatsapp/Controllers/loginController.dart';
 import 'package:whatsapp/models/chatuserModel.dart';
+import 'package:whatsapp/models/groupModel.dart';
 import 'package:whatsapp/models/messageModel.dart';
+import 'package:whatsapp/screen/homescreen.dart';
 
 class HomeController extends GetxController {
   RxString enteredMessage = ''.obs;
@@ -14,6 +16,29 @@ class HomeController extends GetxController {
   RxString msgImage = ''.obs;
 
   RxBool showemoji = false.obs;
+
+  RxList totalmembers = [].obs;
+
+  RxList selectedMembers = [].obs;
+
+  manageSelectedMembers(chatuser) {
+    if (selectedMembers.contains(chatuser)) {
+      selectedMembers.remove(chatuser);
+    } else {
+      selectedMembers.add(chatuser);
+    }
+
+    print(selectedMembers.value);
+  }
+
+  addRemoveMember(index) {
+    if (selectedMembers.any((element) => element.id == index.id)) {
+      selectedMembers.removeWhere((element) => element.id == index.id);
+    } else {
+      selectedMembers.add(index);
+    }
+    print(index);
+  }
 
   void updateEntermassage(String message) {
     enteredMessage.value = message;
@@ -160,5 +185,44 @@ class HomeController extends GetxController {
         return 'Dec';
     }
     return 'NA';
+  }
+
+  List<String> finalList = [];
+  List<String> adminList = [];
+  getFinalGroupList(String loginid) {
+    finalList = [];
+    adminList = [];
+    finalList.add(loginid);
+    adminList.add(loginid);
+    for (var i = 0; i < selectedMembers.length; i++) {
+      finalList.add(selectedMembers[i].id);
+    }
+  }
+
+  addNewGroup(String groupname, File groupImage) async {
+    var time = DateTime.now().millisecondsSinceEpoch.toString();
+
+    await logincontroller
+        .storeDataInStorage('groupProfile/${groupname}', groupImage)
+        .then((url) {
+      var group = Group(
+          groupName: groupname,
+          groupId: '${groupname}_$time',
+          members: finalList,
+          createdAt: time,
+          admins: adminList,
+          image: url);
+
+      logincontroller.firestore
+          .collection('groups')
+          .doc('${groupname}_$time')
+          .set(group.toMap())
+          .then((value) => Get.offAll(homescreen()));
+
+      selectedMembers.clear();
+      finalList.clear();
+      logincontroller.selectedProfile.value = '';
+      adminList.clear();
+    });
   }
 }

@@ -90,9 +90,11 @@ Widget Chats() {
                       ],
                     ),
                   ),
-                  trailing: Text(homeController.getFormatedDate(
-                      context: context,
-                      time: loginController.loginuser.value!.lastSeen)),
+                  // trailing: Text(
+                  //   homeController.getFormatedDate(
+                  //       context: context,
+                  //       time: loginController.loginuser.value!.lastSeen),
+                  // ),
                   // subtitle: Text("8234567534"),
                   // trailing: Icon(Icons.arrow_forward),
                 ),

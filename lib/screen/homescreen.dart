@@ -8,6 +8,7 @@ import 'package:whatsapp/screen/calls.dart';
 import 'package:whatsapp/screen/profile.dart';
 import 'package:whatsapp/screen/status.dart';
 import 'package:whatsapp/widgets/chats.dart';
+import 'package:whatsapp/widgets/groupscreenwidget.dart';
 //import 'package:whatsapp/screen/chats2.dart';
 
 class homescreen extends StatefulWidget {
@@ -43,7 +44,7 @@ class _homescreenState extends State<homescreen> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return DefaultTabController(
-      length: 3,
+      length: 4,
       child: Scaffold(
         appBar: AppBar(
           toolbarHeight: 75,
@@ -107,17 +108,18 @@ class _homescreenState extends State<homescreen> {
           ],
           bottom: TabBar(
               labelColor: Colors.white,
-              labelStyle: TextStyle(fontSize: 20),
+              labelStyle: TextStyle(fontSize: 18),
               unselectedLabelStyle: TextStyle(fontSize: 15),
               unselectedLabelColor: Colors.white,
               indicatorColor: Colors.white,
               indicatorSize: TabBarIndicatorSize.label,
-              indicatorPadding: EdgeInsets.only(bottom: 2),
+              indicatorPadding: EdgeInsets.only(bottom: 3),
               tabs: [
                 // Container(
                 //     width: size.width,
                 //     height: 40,
                 //     child: Center(child: Icon(Icons.supervisor_account))),
+
                 Container(
                     width: size.width,
                     height: 40,
@@ -125,11 +127,15 @@ class _homescreenState extends State<homescreen> {
                 Container(
                     width: size.width,
                     height: 40,
+                    child: Center(child: Text("Groups"))),
+                Container(
+                    width: size.width,
+                    height: 40,
                     child: Center(child: Text("Updates"))),
                 Container(
                     width: size.width,
                     height: 40,
-                    child: Center(child: Text("Calls")))
+                    child: Center(child: Text("Calls"))),
               ]),
         ),
         floatingActionButton: InkWell(
@@ -145,9 +151,8 @@ class _homescreenState extends State<homescreen> {
             height: 60,
             width: 60,
             decoration: BoxDecoration(
-              color: Color.fromARGB(255, 4, 86, 4),
-              borderRadius: BorderRadius.circular(50),
-            ),
+                color: Color.fromARGB(255, 4, 86, 4),
+                borderRadius: BorderRadius.circular(50)),
             child: Icon(
               Icons.message,
               color: Colors.white,
@@ -156,6 +161,7 @@ class _homescreenState extends State<homescreen> {
         ),
         body: TabBarView(children: [
           Chats(),
+          groupscreen(),
           status(),
           Calls(),
         ]),
