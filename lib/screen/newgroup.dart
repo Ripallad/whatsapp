@@ -54,9 +54,11 @@ class NewGroup extends StatelessWidget {
                 ],
               ),
               floatingActionButton: FloatingActionButton(
-                backgroundColor: Color(0xff075E54),
+                backgroundColor: Color.fromARGB(255, 4, 86, 4),
                 onPressed: () {
-                  Get.to(() => GroupCreateScreen());
+                  if (homecontroller.selectedMembers.value.isNotEmpty) {
+                    Get.to(() => GroupCreateScreen());
+                  }
                 },
                 child: Icon(
                   Icons.arrow_forward,

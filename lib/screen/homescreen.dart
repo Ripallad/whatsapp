@@ -138,25 +138,21 @@ class _homescreenState extends State<homescreen> {
                     child: Center(child: Text("Calls"))),
               ]),
         ),
-        floatingActionButton: InkWell(
-          onTap: () => Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) {
-                return Selectcontact();
-              },
-            ),
-          ),
-          child: Container(
-            height: 60,
-            width: 60,
-            decoration: BoxDecoration(
-                color: Color.fromARGB(255, 4, 86, 4),
-                borderRadius: BorderRadius.circular(50)),
-            child: Icon(
-              Icons.message,
-              color: Colors.white,
-            ),
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: Color.fromARGB(255, 4, 86, 4),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return Selectcontact();
+                },
+              ),
+            );
+          },
+          child: Icon(
+            Icons.message,
+            color: Colors.white,
           ),
         ),
         body: TabBarView(children: [

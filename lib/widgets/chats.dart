@@ -9,6 +9,7 @@ import 'package:whatsapp/models/chatuserModel.dart';
 import '../screen/chats1.dart';
 
 Widget Chats() {
+  
   final loginController = Get.put(Logincontroller());
   final homeController = Get.put(HomeController());
   return StreamBuilder(
