@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:whatsapp/Controllers/homeController.dart';
 import 'package:whatsapp/Controllers/loginController.dart';
+import 'package:whatsapp/screen/groupChat.dart';
 
 import '../models/groupModel.dart';
 
@@ -41,39 +42,34 @@ Widget groupscreen() {
                         color: Colors.yellow),
                   ),
                   // leading: Icon(Icons.home),
-                  title: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        height: 8,
-                      ),
-                      Text(
-                        groups[index].groupName,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 15),
-                      ),
-                      // title: Text("Contact $index"),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.done_all,
-                            size: Checkbox.width,
-                          ),
-                          SizedBox(
-                            width: 2,
-                          ),
-                          Expanded(
-                            child: Text(
-                              groups[index].groupId,
-                              style: TextStyle(fontSize: 11),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
+                  title: InkWell(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) =>
+                            GroupChat(groupUser: groups[index]),
+                      ));
+                    },
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 8,
+                        ),
+                        Text(
+                          groups[index].groupName,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 15),
+                        ),
+                        // title: Text("Contact $index"),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Icon(
+                          Icons.done_all,
+                          size: Checkbox.width,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               );

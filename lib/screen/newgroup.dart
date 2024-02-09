@@ -5,6 +5,7 @@ import 'package:velocity_x/velocity_x.dart';
 import 'package:whatsapp/Controllers/homeController.dart';
 import 'package:whatsapp/Controllers/loginController.dart';
 import 'package:whatsapp/screen/groupcreatescreen.dart';
+import 'package:whatsapp/screen/homescreen.dart';
 
 class NewGroup extends StatelessWidget {
   final List memberlist;
@@ -26,7 +27,7 @@ class NewGroup extends StatelessWidget {
                 backgroundColor: Color.fromARGB(255, 4, 86, 4),
                 leading: InkWell(
                     onTap: () {
-                      Get.back();
+                      Get.offAll(() => homescreen());
                       homecontroller.selectedMembers.clear();
                     },
                     child: Icon(Icons.arrow_back)),

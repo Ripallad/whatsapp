@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:whatsapp/Controllers/loginController.dart';
 import 'package:whatsapp/models/chatuserModel.dart';
+import 'package:whatsapp/models/groupMessage.dart';
 import 'package:whatsapp/models/groupModel.dart';
 import 'package:whatsapp/models/messageModel.dart';
 import 'package:whatsapp/screen/homescreen.dart';
@@ -187,6 +188,18 @@ class HomeController extends GetxController {
     return 'NA';
   }
 
+  void updateEnteredMessage(String message) {
+    enteredMessage.value = message;
+  }
+
+  //group function
+  Stream<QuerySnapshot<Map<String, dynamic>>> getSingleUser(userid) {
+    return logincontroller.firestore
+        .collection('users')
+        .where('id', isEqualTo: '$userid')
+        .snapshots();
+  }
+
   List<String> finalList = [];
   List<String> adminList = [];
   getFinalGroupList(String loginid) {
@@ -197,6 +210,43 @@ class HomeController extends GetxController {
     for (var i = 0; i < selectedMembers.length; i++) {
       finalList.add(selectedMembers[i].id);
     }
+  }
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> getGroupMessages(group) {
+    return logincontroller.firestore
+        .collection('groupchats/${group.groupId}/messages/')
+        .snapshots();
+  }
+
+  sendGroupImagesFromCamera(Group group) {
+    pickCameraImage().then((value) async {
+      final time = DateTime.now().millisecondsSinceEpoch.toString();
+      logincontroller
+          .storeDataInStorage(
+              '/groupchatImages/${group.groupId}_$time', File(msgImage.value))
+          .then((image) {
+        sendGroupMessage(group, image, GType.Image);
+      });
+    });
+  }
+
+  sendGroupMessage(Group group, mymessage, GType type) async {
+    var time = DateTime.now().millisecondsSinceEpoch.toString();
+
+    final message = GroupMessage(
+        fromId: logincontroller.loginuser.value!.id,
+        toId: group.groupId,
+        sendTime: time,
+        message: mymessage,
+        type: type);
+
+    final ref = logincontroller.firestore
+        .collection("groupchats/${group.groupId}/messages/");
+
+    await ref
+        .doc(time)
+        .set(message.toMap())
+        .then((value) => enteredMessage.value == '');
   }
 
   addNewGroup(String groupname, File groupImage) async {

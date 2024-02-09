@@ -30,7 +30,7 @@ class Selectcontact extends StatelessWidget {
               style: TextStyle(color: Colors.white, fontSize: 20),
             ),
             Text(
-              "302 contacts",
+              "${homecontroller.totalmembers.length} Contacts",
               style: TextStyle(fontSize: 15, color: Colors.white),
             ),
           ],

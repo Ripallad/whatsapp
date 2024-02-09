@@ -9,7 +9,6 @@ import 'package:whatsapp/models/chatuserModel.dart';
 import '../screen/chats1.dart';
 
 Widget Chats() {
-  
   final loginController = Get.put(Logincontroller());
   final homeController = Get.put(HomeController());
   return StreamBuilder(
@@ -37,15 +36,68 @@ Widget Chats() {
               return Padding(
                 padding: const EdgeInsets.all(5.0),
                 child: ListTile(
-                  leading: Container(
-                    height: 50,
-                    width: 50,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: NetworkImage(datalist[index].profile),
-                            fit: BoxFit.cover),
-                        borderRadius: BorderRadius.circular(80),
-                        color: Colors.yellow),
+                  leading: InkWell(
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              shape: RoundedRectangleBorder(),
+                              contentPadding: EdgeInsets.zero,
+                              content: Container(
+                                height: 300,
+                                child: Column(
+                                  children: [
+                                    Expanded(
+                                        child: Container(
+                                      decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                              image: NetworkImage(
+                                                  datalist[index].profile))),
+                                    )),
+                                    Container(
+                                      height: 50,
+                                      width: double.infinity,
+                                      color: Colors.white,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        children: [
+                                          Icon(
+                                            Icons.message,
+                                            color: Colors.green,
+                                          ),
+                                          Icon(
+                                            Icons.call,
+                                            color: Colors.green,
+                                          ),
+                                          Icon(
+                                            Icons.video_call,
+                                            color: Colors.green,
+                                          ),
+                                          Icon(
+                                            Icons.info_rounded,
+                                            color: Colors.green,
+                                          )
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            );
+                          });
+                    },
+                    child: Container(
+                      height: 50,
+                      width: 50,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: NetworkImage(datalist[index].profile),
+                              fit: BoxFit.cover),
+                          borderRadius: BorderRadius.circular(80),
+                          color: Colors.yellow),
+                    ),
                   ),
                   // leading: Icon(Icons.home),
                   title: InkWell(
