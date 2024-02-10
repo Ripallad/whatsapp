@@ -115,39 +115,40 @@ class chat1 extends StatelessWidget {
                 size: 25,
               ),
               PopupMenuButton<String>(
-                  iconColor: Colors.white,
-                  onSelected: (value) {
-                    print(value);
-                  },
-                  color: Colors.white,
-                  itemBuilder: (BuildContext context) {
-                    return [
-                      PopupMenuItem(
-                        child: Text("View contact"),
-                        value: "View contact",
-                      ),
-                      PopupMenuItem(
-                        child: Text("Media, links, and docs"),
-                        value: "Media, links, and docs",
-                      ),
-                      PopupMenuItem(
-                        child: Text("WhatApp web"),
-                        value: "WhatApp web",
-                      ),
-                      PopupMenuItem(
-                        child: Text("Search"),
-                        value: "Search",
-                      ),
-                      PopupMenuItem(
-                        child: Text("Mute Notification"),
-                        value: "Mute Notification",
-                      ),
-                      PopupMenuItem(
-                        child: Text("Wallpaper"),
-                        value: "Wallpaper",
-                      ),
-                    ];
-                  })
+                iconColor: Colors.white,
+                onSelected: (value) {
+                  print(value);
+                },
+                color: Colors.white,
+                itemBuilder: (BuildContext context) {
+                  return [
+                    PopupMenuItem(
+                      child: Text("View contact"),
+                      value: "View contact",
+                    ),
+                    PopupMenuItem(
+                      child: Text("Media, links, and docs"),
+                      value: "Media, links, and docs",
+                    ),
+                    PopupMenuItem(
+                      child: Text("WhatApp web"),
+                      value: "WhatApp web",
+                    ),
+                    PopupMenuItem(
+                      child: Text("Search"),
+                      value: "Search",
+                    ),
+                    PopupMenuItem(
+                      child: Text("Mute Notification"),
+                      value: "Mute Notification",
+                    ),
+                    PopupMenuItem(
+                      child: Text("Wallpaper"),
+                      value: "Wallpaper",
+                    ),
+                  ];
+                },
+              ),
             ],
           ),
           body: Column(

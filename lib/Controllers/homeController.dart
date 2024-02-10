@@ -21,6 +21,8 @@ class HomeController extends GetxController {
   RxList totalmembers = [].obs;
 
   RxList selectedMembers = [].obs;
+  RxBool stopNotification = false.obs;
+  RxBool chatlock = false.obs;
 
   manageSelectedMembers(chatuser) {
     if (selectedMembers.contains(chatuser)) {
@@ -274,5 +276,11 @@ class HomeController extends GetxController {
       logincontroller.selectedProfile.value = '';
       adminList.clear();
     });
+  }
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> getGroupImages(Group group) {
+    return logincontroller.firestore
+        .collection('groupchats/${group.groupId}/messages')
+        .snapshots();
   }
 }

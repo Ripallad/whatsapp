@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:whatsapp/Controllers/homeController.dart';
 import 'package:whatsapp/Controllers/loginController.dart';
 import 'package:whatsapp/models/chatuserModel.dart';
+import 'package:whatsapp/screen/alluserinformation.dart';
 
 import '../screen/chats1.dart';
 
@@ -63,9 +64,15 @@ Widget Chats() {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceAround,
                                         children: [
-                                          Icon(
-                                            Icons.message,
-                                            color: Colors.green,
+                                          InkWell(
+                                            onTap: () {
+                                              Get.off(() => chat1(
+                                                  oppuser: datalist[index]));
+                                            },
+                                            child: Icon(
+                                              Icons.message,
+                                              color: Colors.green,
+                                            ),
                                           ),
                                           Icon(
                                             Icons.call,
@@ -75,9 +82,15 @@ Widget Chats() {
                                             Icons.video_call,
                                             color: Colors.green,
                                           ),
-                                          Icon(
-                                            Icons.info_rounded,
-                                            color: Colors.green,
+                                          InkWell(
+                                            onTap: () {
+                                              Get.off(() => AllUserInformation(
+                                                  user: datalist[index]));
+                                            },
+                                            child: Icon(
+                                              Icons.info_rounded,
+                                              color: Colors.green,
+                                            ),
                                           )
                                         ],
                                       ),
